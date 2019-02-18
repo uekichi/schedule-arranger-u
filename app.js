@@ -10,13 +10,10 @@ require('dotenv').config();
 
 //GitHub OAuth
 var GitHubStrategy = require('passport-github2').Strategy;
-var GITHUB_CLIENT_ID = 'fa0ff50525ceb1efc8fe';
-var GITHUB_CLIENT_SECRET = '386013f5a3ac5ae2f4921c509bacda981b10ad1c';
 
 //Twitter OAuth
 var TwitterStrategy = require('passport-twitter');
-var TWITTER_CONSUMER_KEY = 'uxsRtgJ3iXzE65WNi1v0yslWV'
-var TWITTER_CONSUMER_SECRET = 'zrQSAX0WehypYxDtRbPMehB6ij6VBDR4YbsxFFlHNvHv2I4oZi'
+
 
 
 passport.serializeUser(function (user, done) {
