@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  div
+    a(href="/auth/github") GitHubでログイン
+  div
+    a(href="/auth/twitter") Twitterでログイン
+  if user
+    p 現在 #{user.username} でログイン中
