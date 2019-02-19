@@ -13,11 +13,19 @@ describe('/login', () => {
     passportStub.logout();
     passportStub.uninstall(app);
   });
-  it('ログインのためのリンクが含まれる', (done) => {
+  it('ログインのためのGitHubリンクが含まれる', (done) => {
     request(app)
       .get('/login')
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(/<a href="\/auth\/github"/)
+      .expect(200, done);
+  });
+
+  it('ログインのためのTwitterリンクが含まれる', (done) => {
+    request(app)
+      .get('/login')
+      .expect('Content-Type', 'text/html; charset=utf-8')
+      .expect(/<a href="\/auth\/twitter"/)
       .expect(200, done);
   });
 

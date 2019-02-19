@@ -14,8 +14,6 @@ var GitHubStrategy = require('passport-github2').Strategy;
 //Twitter OAuth
 var TwitterStrategy = require('passport-twitter');
 
-
-
 passport.serializeUser(function (user, done) {
   done(null, user);
 });
@@ -97,7 +95,7 @@ app.get('/auth/github/callback',
     res.redirect('/');
 });
 
-app.use(session({ secret: '9c2fd85dec6bd5cf', resave: false, saveUninitialized: false }));
+app.use(session({ secret: process.env.SESSION_ID, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
