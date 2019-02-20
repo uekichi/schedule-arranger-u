@@ -22,4 +22,4 @@ const Comment = loader.database.define('comments', {
     timestamps: false
   });
 
-module.exports = Comment;c
+module.exports = Comment;

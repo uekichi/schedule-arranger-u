@@ -8,6 +8,24 @@ var session = require('express-session');
 var passport = require('passport');
 require('dotenv').config();
 
+// モデルの読み込み
+var User = require('./models/user');
+var Schedule = require('./models/schedule');
+var Availability = require('./models/availability');
+var Candidate = require('./models/candidate');
+var Comment = require('./models/comment');
+User.sync().then(() => {
+  Schedule.belongsTo(User, {foreignKey: 'createdBy'});
+  Schedule.sync();
+  Comment.belongsTo(User, {foreignKey: 'userId'});
+  Comment.sync();
+  Availability.belongsTo(User, {foreignKey: 'userId'});
+  Candidate.sync().then(() => {
+    Availability.belongsTo(Candidate, {foreignKey: 'candidateId'});
+    Availability.sync();
+  });
+});
+
 //GitHub OAuth
 var GitHubStrategy = require('passport-github2').Strategy;
 
@@ -30,7 +48,12 @@ passport.use(new GitHubStrategy({
 },
   function (accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
-      return done(null, profile);
+      User.upsert({
+        userId: profile.id,
+        username: profile.username
+      }).then(() => {
+        done(null, profile);
+      });
     });
   }
 ));
@@ -43,7 +66,12 @@ passport.use(new TwitterStrategy({
 },
 function (accessToken, refreshToken, profile, done) {
   process.nextTick(function () {
-    return done(null, profile);
+    User.upsert({
+      userId: profile.id,
+      username: profile.username
+    }).then(() => {
+      done(null, profile);
+    });
   });
 }
 ));
@@ -51,6 +79,7 @@ function (accessToken, refreshToken, profile, done) {
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
+var schedulesRouter = require('./routes/schedules');
 
 var app = express();
 app.use(helmet());
@@ -69,20 +98,10 @@ app.use(session({ secret: process.env.SESSION_ID, resave: false, saveUninitializ
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Twitter OAuth認証
-app.get('/auth/twitter',
-    passport.authenticate('twitter'));
-
-//認証の成否分岐
-app.get('/auth/twitter/callback',
-    passport.authenticate('twitter', { failureRedirect: '/login' }),
-    function(req, res) {
-      res.redirect('/');
-});
-
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
+app.use('/schedules', schedulesRouter);
 
 app.get('/auth/github',
   passport.authenticate('github', { scope: ['user:email'] }),
@@ -93,6 +112,17 @@ app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function (req, res) {
     res.redirect('/');
+});
+
+//Twitter OAuth認証
+app.get('/auth/twitter',
+    passport.authenticate('twitter'));
+
+//認証の成否分岐
+app.get('/auth/twitter/callback',
+    passport.authenticate('twitter', { failureRedirect: '/login' }),
+    function(req, res) {
+      res.redirect('/');
 });
 
 app.use(session({ secret: process.env.SESSION_ID, resave: false, saveUninitialized: false }));
