@@ -1,9 +1,19 @@
-extends layout
-
-block content
-  div
-    a(href="/auth/github") GitHubでログイン
-  div
-    a(href="/auth/twitter") Twitterでログイン
-  if user
-    p 現在 #{user.username} でログイン中
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="../public/javascripts/jquery-3.3.1.min.js")
+    script(src="../routes/login.js")
+  body
+    header
+      div#login
+        a(href="/auth/github") GitHubでログイン
+        a(href="/auth/twitter") Twitterでログイン
+      if user
+        p.current 現在 #{user.username} でログイン中
+    main
+      p.discription 予定調整くんは、来訪者に予定候補に参加の有無やメッセージを返信してもらうことで可視化され予定調整が便利になるアプリです。GitHub認証、Twitter認証を利用しています。
+    footer
+      div.footerInner
+        small &copy; N予備校

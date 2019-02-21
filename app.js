@@ -50,7 +50,8 @@ passport.use(new GitHubStrategy({
     process.nextTick(function () {
       User.upsert({
         userId: profile.id,
-        username: profile.username
+        username: profile.username,
+        userprovider: profile.provider
       }).then(() => {
         done(null, profile);
       });
@@ -68,7 +69,8 @@ function (accessToken, refreshToken, profile, done) {
   process.nextTick(function () {
     User.upsert({
       userId: profile.id,
-      username: profile.username
+      username: profile.username,
+      userprovider: profile.provider
     }).then(() => {
       done(null, profile);
     });

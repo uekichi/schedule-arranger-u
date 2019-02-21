@@ -4,4 +4,10 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    header
+      p Welcome to #{title}
+      img(src=picture_url, width="50px" height="50px")
     block content
+    footer
+      div.footerInner
+        small &copy; N予備校

@@ -1,12 +1,8 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  img(src=picture_url, width="50px" height="50px")
   div
     if user
       a(href="/logout") #{user.username} をログアウト
     else
       a(href="/login") ログイン
-  
