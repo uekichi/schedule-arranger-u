@@ -2,6 +2,12 @@
 const request = require('supertest');
 const app = require('../app');
 const passportStub = require('passport-stub');
+const User = require('../models/user');
+const Schedule = require('../models/schedule');
+const Candidate = require('../models/candidate');
+const Availability = require('../models/availability');
+const Comment = require('../models/comment');
+
 
 describe('/login', () => {
   before(() => {
@@ -36,10 +42,13 @@ describe('/login', () => {
       .expect(200, done);
   });
 
-  it('ログアウト時はトップページにリダイレクトされる', (done) => {
+
+  it('/ にリダイレクトされる', (done) => {
     request(app)
       .get('/logout')
       .expect('Location', '/')
-      .expect(302, done)
+      .expect(302, done);
   });
 });
+
+

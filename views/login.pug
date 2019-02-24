@@ -3,8 +3,8 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(src="../public/javascripts/jquery-3.3.1.min.js")
-    script(src="../routes/login.js")
+    script(src="/javascripts/jquery-3.3.1.min.js")
+    script(src="/javascripts/buruburu.js")
   body
     header
       div#login
@@ -14,6 +14,7 @@ html
         p.current 現在 #{user.username} でログイン中
     main
       p.discription 予定調整くんは、来訪者に予定候補に参加の有無やメッセージを返信してもらうことで可視化され予定調整が便利になるアプリです。GitHub認証、Twitter認証を利用しています。
+      img#sumaho(src="/images/smartphone.png")
     footer
       div.footerInner
         small &copy; N予備校
