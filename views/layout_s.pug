@@ -10,21 +10,11 @@ html
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm",
     crossorigin="anonymous")
     link(rel="stylesheet", href="/stylesheets/style.css")
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js")
     
   body
     header
-      nav.navbar.navbar-light.bg-light
-        div.navbar-header
-          a(href="/").navbar-brand.nav-link 予定調整くん
-        ul.navbar-nav
-          if user
-            li.nav-item
-              img(src=picture_url, width="50px" height="50px")
-              a(href="/logout").nav-link #{user.username} をログアウト
-          else
-            li.nav-item
-              a(href="/login").nav-link ログイン
+      p Welcome to #{title}
+      img(src=picture_url, width="50px" height="50px")
     div.container
       block content
     footer

@@ -1,16 +1,17 @@
 extends layout
 
 block content
-  div
+  main.index
+    div.jumbotron.my-3
+      h1.display-4 予定調整くん
+      p.lead 予定調整くんは、来訪者に予定候補に参加の有無やメッセージを返信してもらうことで可視化され予定調整が便利になるアプリです。GitHub認証、Twitter認証を利用しています。
     if user
       div
-        a(href="/logout") #{user.username} をログアウト
-      div
-        a(href="/schedules/new") 予定を作る
+        a(href="/schedules/new").btn.btn-info 予定を作る
       - var hasSchedule = schedules.length > 0
       if hasSchedule
-        h3 あなたの作った予定一覧
-        table.table(align="center")
+        h3.my-3 あなたの作った予定一覧
+        table.table.table-striped
           tr
             th 予定名
             th 更新日時
@@ -18,7 +19,4 @@ block content
             tr
               td
                 a(href=`/schedules/${schedule.scheduleId}`) #{schedule.scheduleName}
-              td #{schedule.updatedAt}
-    else
-      div
-        a(href="/login") ログイン
+              td #{schedule.formattedUpdatedAt}

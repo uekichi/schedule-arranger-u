@@ -1,43 +1,66 @@
 extends layout
 
 block content
-  h4 #{schedule.scheduleName}
-  p(style="white-space:pre;") #{schedule.memo}
-  p 作成者: #{schedule.user.username}
-  - var isMine = user.id === String(schedule.user.userId)
-  if isMine
-    div
-      a(href=`/schedules/${schedule.scheduleId}/edit`) この予定を編集する
-  h3 出欠表
-  table(align="center")
-    tr
-      th 予定
-      each user in users
-        th #{user.username}
-    each candidate in candidates
+  main.schedule
+    div.card.my-3
+      div.card-header
+        h4 #{schedule.scheduleName}
+      div.card-body
+        p(style="white-space:pre-warp;") #{schedule.memo}
+      div.card-footer
+        p 作成者: #{schedule.user.username}
+    - var isMine = user.id === String(schedule.user.userId)
+    if isMine
+      div
+        a(href=`/schedules/${schedule.scheduleId}/edit`).btn.btn-info この予定を編集する
+    h3.my-3 出欠表
+    table.table.table-border
       tr
-        th #{candidate.candidateName}
+        th 予定
+        th 出席数
         each user in users
-          - var availability = availabilityMapMap.get(user.userId).get(candidate.candidateId)
-          - var availabilityLabels = ['欠', '？', '出'];
-          td
-            if user.isSelf
+          th #{user.username}
+      each candidate in candidates
+        tr
+          th #{candidate.candidateName} 
+          //- TODO 合計人数を計算するコード　AJAXでボタンを押した時に対応させたい
+          - var sum = 0
+          each user in users
+            - var availability = availabilityMapMap.get(user.userId).get(candidate.candidateId)
+            - if (availability === 2){ sum++ }
+          td#participants #{sum}
+          each user in users
+            - var availability = availabilityMapMap.get(user.userId).get(candidate.candidateId)
+            - var availabilityLabels = ['欠', '？', '出'];
+            - var buttonStyles = ['btn-danger', 'btn-secondary', 'btn-success'];
+            td
+              if user.isSelf
+                button(class=`availability-toggle-button btn-lg ${buttonStyles[availability]}`
+                  data-schedule-id=schedule.scheduleId
+                  data-user-id=user.userId
+                  data-candidate-id=candidate.candidateId
+                  data-availability=availability) #{availabilityLabels[availability]}
+              else
+                h3 #{availabilityLabels[availability]}
+      tr
+        th コメント
+        each user in users
+          if user.isSelf
+            td
+              p
+                samall#self-comment #{commentMap.get(user.userId)}
               button(
                 data-schedule-id=schedule.scheduleId
-                data-user-id=user.userId
-                data-candidate-id=candidate.candidateId
-                data-availability=availability).availability-toggle-button #{availabilityLabels[availability]}
-            else
-              p #{availabilityLabels[availability]}
-    tr
-      th コメント
-      each user in users
-        if user.isSelf
-          td
-            p#self-comment #{commentMap.get(user.userId)}
-            button(
-              data-schedule-id=schedule.scheduleId
-              data-user-id=user.userId)#self-comment-button 編集
-        else
-          td
-            p #{commentMap.get(user.userId)}
+                data-user-id=user.userId)#self-comment-button.btn-xs.btn-info コメント編集
+          else
+            td
+              p
+                small #{commentMap.get(user.userId)}
+    div
+      a(href="https://twitter.com/intent/tweet?button_hashtag=予定調整くん&ref_src=twsrc%5Etfw" 
+      class="twitter-hashtag-button"
+      data-text=`http://localhost:8000/schedules/${schedule.scheduleId}/`)
+      script(src="https://platform.twitter.com/widgets.js" charset="utf-8")
+      //- data-text=`${herokuURL}schedules/${schedule.scheduleId}/`)
+      //- script(src="https://platform.twitter.com/widgets.js" charset="utf-8")
+      

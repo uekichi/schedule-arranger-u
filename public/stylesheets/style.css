@@ -1,20 +1,17 @@
 body{
-  padding: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  /* background-image: url("../images/wallpaper.jpg"); */
-  background-color: rgb(245, 234, 168);
+  /*画像 background-image: url("../images/wallpaper.jpg"); */
+  /* background-color: rgb(245, 234, 168); */
   text-align: center;
-  
 }
 
-#login{
-  color: rgb(52, 51, 79);
+.login-btn{
+  color: white;
   text-align: center;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
+  justify-content: center;
+  margin: 30px 30px 30px;
 }
 
 .buruburu {
@@ -32,23 +29,48 @@ body{
   100% {transform: translate(0px, 0px)}
 }
 
+/*なんだこれ*/
 .current {
   background-color: white;
   margin: 30px 100px 30px;
 }
+
+/*なんだこれ*/
 .discription {
   font-size: 24px;
   text-align: center;
   margin: 60px auto 0;
 }
 
+/*なんだこれ*/
+.left {
+  text-align: left;
+}
+
 footer {
-  background: white;
+  background: rgb(237, 241, 255);
 }
 
 .footerInner{
   text-align: center;
-  margin-top: 50px;
+  margin-top: 30px;
   padding: 30px;
+}
+
+.new{
+  background-color: rgb(204, 252, 251);
+  padding: 10px 30px 30px 30px;
+  margin-top: 30px;
+}
+
+.edit{
+  background-color: rgb(252, 246, 204);
+  padding: 10px 30px 30px 30px;
+  margin-top: 30px;
+  margin-bottom: 10px
+}
+
+.index, .schedule{
+  margin-top: 30px;
 }
 

@@ -1,5 +1,9 @@
 'use strict';
 import $ from 'jquery';
+const global = Function('return this;')();
+global.jQuery = $;
+import bootstrap from 'bootstrap';
+
 
 $('.availability-toggle-button').each((i, e) => {
   const button = $(e);
@@ -15,6 +19,23 @@ $('.availability-toggle-button').each((i, e) => {
         button.data('availability', data.availability);
         const availabilityLabels = ['欠', '？', '出'];
         button.text(availabilityLabels[data.availability]);
+      //参加人数のボタン対応
+        let participants = $(`#participants`).text();
+        if (availabilityLabels[data.availability] === '出'){
+          participants = parseInt(participants) + 1;
+          $(`#participants`).text(participants);
+          // console.log(participants);
+          // console.log(candidateId);
+          // console.log('hello');
+        } else if (availabilityLabels[data.availability] === '欠'){
+          participants = parseInt(participants) - 1;
+          $("#participants").text(participants);
+        } else {
+
+        }
+        const buttonStyles = ['btn-danger', 'btn-secondary', 'btn-success'];
+        button.removeClass('btn-danger btn-secondary btn-success');
+        button.addClass(buttonStyles[data.availability]);
       });
   });
 });

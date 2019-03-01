@@ -4,7 +4,7 @@
 //var $ = require('jquery');
 
 $(function(){
-  $('#login').hover(function(){
+  $('.login-btn').hover(function(){
     $('#sumaho').addClass("buruburu");
     setTimeout(function(){
       $('#sumaho').removeClass("buruburu");
