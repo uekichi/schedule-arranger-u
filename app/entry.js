@@ -20,18 +20,16 @@ $('.availability-toggle-button').each((i, e) => {
         const availabilityLabels = ['欠', '？', '出'];
         button.text(availabilityLabels[data.availability]);
       //参加人数のボタン対応
-        let participants = $(`#participants`).text();
-        if (availabilityLabels[data.availability] === '出'){
-          participants = parseInt(participants) + 1;
-          $(`#participants`).text(participants);
-          // console.log(participants);
-          // console.log(candidateId);
-          // console.log('hello');
-        } else if (availabilityLabels[data.availability] === '欠'){
-          participants = parseInt(participants) - 1;
-          $("#participants").text(participants);
-        } else {
-
+        if (button.hasClass(`sumAttendButton-${candidateId}`)){
+          let participants = $(`.sumAttend-${candidateId}`).text();
+              if (availabilityLabels[data.availability] === '出'){
+                participants = parseInt(participants) + 1;
+                $(`.sumAttend-${candidateId}`).text(participants);
+              } else if (availabilityLabels[data.availability] === '欠'){
+                participants = parseInt(participants) - 1;
+                $(`.sumAttend-${candidateId}`).text(participants);
+              } else {
+              }
         }
         const buttonStyles = ['btn-danger', 'btn-secondary', 'btn-success'];
         button.removeClass('btn-danger btn-secondary btn-success');

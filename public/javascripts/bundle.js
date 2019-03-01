@@ -115,17 +115,17 @@ jquery__WEBPACK_IMPORTED_MODULE_0___default()('.availability-toggle-button').eac
       var availabilityLabels = ['欠', '？', '出'];
       button.text(availabilityLabels[data.availability]); //参加人数のボタン対応
 
-      var participants = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#participants").text();
+      if (button.hasClass("sumAttendButton-".concat(candidateId))) {
+        var participants = jquery__WEBPACK_IMPORTED_MODULE_0___default()(".sumAttend-".concat(candidateId)).text();
 
-      if (availabilityLabels[data.availability] === '出') {
-        participants = parseInt(participants) + 1;
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()("#participants").text(participants); // console.log(participants);
-        // console.log(candidateId);
-        // console.log('hello');
-      } else if (availabilityLabels[data.availability] === '欠') {
-        participants = parseInt(participants) - 1;
-        jquery__WEBPACK_IMPORTED_MODULE_0___default()("#participants").text(participants);
-      } else {}
+        if (availabilityLabels[data.availability] === '出') {
+          participants = parseInt(participants) + 1;
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(".sumAttend-".concat(candidateId)).text(participants);
+        } else if (availabilityLabels[data.availability] === '欠') {
+          participants = parseInt(participants) - 1;
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()(".sumAttend-".concat(candidateId)).text(participants);
+        } else {}
+      }
 
       var buttonStyles = ['btn-danger', 'btn-secondary', 'btn-success'];
       button.removeClass('btn-danger btn-secondary btn-success');

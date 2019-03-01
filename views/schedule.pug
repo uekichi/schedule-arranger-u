@@ -28,14 +28,15 @@ block content
           each user in users
             - var availability = availabilityMapMap.get(user.userId).get(candidate.candidateId)
             - if (availability === 2){ sum++ }
-          td#participants #{sum}
+          td#participants(class=`sumAttend-${candidate.candidateId}`) #{sum}
           each user in users
             - var availability = availabilityMapMap.get(user.userId).get(candidate.candidateId)
             - var availabilityLabels = ['欠', '？', '出'];
             - var buttonStyles = ['btn-danger', 'btn-secondary', 'btn-success'];
             td
               if user.isSelf
-                button(class=`availability-toggle-button btn-lg ${buttonStyles[availability]}`
+                button(class=`availability-toggle-button btn-lg 
+                    ${buttonStyles[availability]} sumAttendButton-${candidate.candidateId}`
                   data-schedule-id=schedule.scheduleId
                   data-user-id=user.userId
                   data-candidate-id=candidate.candidateId
